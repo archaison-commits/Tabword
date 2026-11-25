@@ -1,0 +1,70 @@
+{
+  "name": "tabword",
+  "displayName": "Tabword",
+  "description": "Quiet, terminal-style word completion from the current document.",
+  "version": "0.1.1",
+  "publisher": "local-learning",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages"
+  ],
+  "keywords": [
+    "word completion",
+    "tab completion",
+    "terminal",
+    "zsh",
+    "productivity"
+  ],
+  "icon": "images/tabword-icon.png",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "files": [
+    "out/**",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "images/**"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "tabword.expand",
+        "title": "Tabword: Complete Next"
+      },
+      {
+        "command": "tabword.expandPrevious",
+        "title": "Tabword: Complete Previous"
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "tab",
+        "command": "tabword.expand",
+        "when": "editorTextFocus && tabword.canComplete"
+      },
+      {
+        "key": "shift+tab",
+        "command": "tabword.expandPrevious",
+        "when": "editorTextFocus && tabword.canComplete"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3",
+    "@vscode/vsce": "^3.6.0"
+  }
+}
