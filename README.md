@@ -1,5 +1,4 @@
 # Tabword
-<<<<<<< HEAD
 
 **Terminal-style word completion for Visual Studio Code.**
 
@@ -45,11 +44,11 @@ press `Tab` to complete the word to `database_connection`.
 
 ### Install from a VSIX file
 
-1. Download the `tabword-0.1.1.vsix` release file.
+1. Download the `tabword-0.1.2.vsix` release file.
 2. Open **Visual Studio Code**.
 3. Open the Command Palette with `Ctrl + Shift + P` (`Cmd + Shift + P` on macOS).
 4. Run **Extensions: Install from VSIX...**.
-5. Select the downloaded `tabword-0.1.1.vsix` file.
+5. Select the downloaded `tabword-0.1.2.vsix` file.
 6. Reload VS Code if prompted.
 
 That's it. Tabword is ready to use.

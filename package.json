@@ -2,8 +2,12 @@
   "name": "tabword",
   "displayName": "Tabword",
   "description": "Quiet, terminal-style word completion from the current document.",
-  "version": "0.1.1",
-  "publisher": "local-learning",
+  "version": "0.1.2",
+  "publisher": "archaison-commits",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/archaison-commits/Tabword.git"
+},
   "license": "MIT",
   "engines": {
     "vscode": "^1.85.0"
@@ -24,13 +28,6 @@
     "onStartupFinished"
   ],
   "main": "./out/extension.js",
-  "files": [
-    "out/**",
-    "README.md",
-    "CHANGELOG.md",
-    "LICENSE",
-    "images/**"
-  ],
   "contributes": {
     "commands": [
       {
@@ -64,7 +61,7 @@
   "devDependencies": {
     "@types/node": "^20.11.0",
     "@types/vscode": "^1.85.0",
-    "typescript": "^5.3.3",
-    "@vscode/vsce": "^3.6.0"
+    "@vscode/vsce": "^3.9.2",
+    "typescript": "^5.3.3"
   }
 }
