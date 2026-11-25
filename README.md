@@ -1,5 +1,4 @@
 # Tabword
-<<<<<<< HEAD
 
 **Terminal-style word completion for Visual Studio Code.**
 
