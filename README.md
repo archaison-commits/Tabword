@@ -1,4 +1,5 @@
 # Tabword
+<<<<<<< HEAD
 
 **Terminal-style word completion for Visual Studio Code.**
 
@@ -170,3 +171,6 @@ extension.
 ## License
 
 MIT. See [LICENSE](LICENSE).
+=======
+Zsh-style word completion using words in the current document.
+>>>>>>> origin/main
