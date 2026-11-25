@@ -14,6 +14,7 @@ interface CompletionSession {
 }
 
 let session: CompletionSession | undefined;
+let memberCompletionActive = false;
 
 const CONTEXT_KEY = "tabword.canComplete";
 const SUGGESTIONS_CONTEXT_KEY = "tabword.suggestionsVisible";
@@ -37,6 +38,7 @@ export function activate(context: vscode.ExtensionContext): void {
             if (session?.stage === "suggesting") {
                 session.stage = "prefix";
             }
+            memberCompletionActive = false;
             await setSuggestionsVisible(false);
             await vscode.commands.executeCommand("hideSuggestWidget");
         }
@@ -97,6 +99,7 @@ export function activate(context: vscode.ExtensionContext): void {
         completionProvider,
         vscode.window.onDidChangeActiveTextEditor(() => {
             session = undefined;
+            memberCompletionActive = false;
             void setSuggestionsVisible(false);
             void refreshContext();
         }),
@@ -104,6 +107,7 @@ export function activate(context: vscode.ExtensionContext): void {
             void refreshContext();
         }),
         vscode.workspace.onDidChangeTextDocument(() => {
+            memberCompletionActive = false;
             void setSuggestionsVisible(false);
             void refreshContext();
         })
@@ -114,6 +118,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
 export function deactivate(): void {
     session = undefined;
+    memberCompletionActive = false;
 }
 
 async function complete(direction: 1 | -1): Promise<void> {
@@ -127,6 +132,19 @@ async function complete(direction: 1 | -1): Promise<void> {
     }
 
     const position = editor.selection.active;
+
+    // After a Python attribute-access dot, delegate member discovery to the
+    // active Python language provider (for example, Pylance).
+    if (isPythonMemberAccessAtCursor(editor.document, position)) {
+        session = undefined;
+        memberCompletionActive = true;
+        await setCanComplete(false);
+        await setSuggestionsVisible(true);
+        await vscode.commands.executeCommand("editor.action.triggerSuggest");
+        return;
+    }
+
+    memberCompletionActive = false;
     const prefixInfo = getPrefixAtCursor(editor.document, position);
 
     if (!prefixInfo) {
@@ -237,6 +255,32 @@ async function complete(direction: 1 | -1): Promise<void> {
         candidates,
         -1,
         "prefix"
+    );
+}
+
+function isPythonMemberAccessAtCursor(
+    document: vscode.TextDocument,
+    position: vscode.Position
+): boolean {
+    if (
+        document.languageId !== "python" ||
+        position.line < 0 ||
+        position.line >= document.lineCount
+    ) {
+        return false;
+    }
+
+    const lineText = document.lineAt(position.line).text;
+    if (position.character <= 0 || position.character > lineText.length) {
+        return false;
+    }
+
+    const beforeCursor = lineText.slice(0, position.character);
+
+    // Require an identifier or dotted identifier chain immediately before the
+    // final dot. This deliberately excludes decimal numbers such as 3.14.
+    return /[A-Za-z_][A-Za-z0-9_]*(?:\s*\.\s*[A-Za-z_][A-Za-z0-9_]*)*\.$/.test(
+        beforeCursor
     );
 }
 
@@ -428,6 +472,17 @@ async function refreshContext(): Promise<void> {
     }
 
     const position = editor.selection.active;
+
+    if (isPythonMemberAccessAtCursor(editor.document, position)) {
+        session = undefined;
+        await setCanComplete(true);
+        if (!memberCompletionActive) {
+            await setSuggestionsVisible(false);
+        }
+        return;
+    }
+
+    memberCompletionActive = false;
     const prefixInfo = getPrefixAtCursor(editor.document, position);
 
     if (!prefixInfo) {

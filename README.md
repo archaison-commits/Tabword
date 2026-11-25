@@ -30,7 +30,8 @@ and you type `varia` elsewhere in the same file:
 ## Features
 
 - **Two-stage completion:** first complete the longest common prefix; press `Tab` again to see choices.
-- **Current-file matching:** only words in the active document are considered.
+- **Current-file matching:** ordinary word completion uses words in the active document.
+- **Python member suggestions:** after typing an attribute-access dot (for example, `math.` or `player.`), press `Tab` to request member completions from your installed Python language provider, such as Pylance.
 - **Compact, cursor-local suggestions:** VS Code displays up to five choices in its native editor suggestion widget, next to the cursor.
 - **Simple selection:** use Up/Down, Enter, Tab, or the mouse to choose a suggestion.
 - **Easy dismissal:** Escape closes the suggestion list without changing the current prefix.
@@ -43,11 +44,11 @@ and you type `varia` elsewhere in the same file:
 
 ### Install from a VSIX file
 
-1. Download `tabword-0.2.4.vsix`.
+1. Download `tabword-0.3.0.vsix`.
 2. Open **Visual Studio Code**.
 3. Open the Command Palette with `Ctrl + Shift + P` (`Cmd + Shift + P` on macOS).
 4. Run **Extensions: Install from VSIX...**.
-5. Select the downloaded `tabword-0.2.4.vsix` file.
+5. Select the downloaded `tabword-0.3.0.vsix` file.
 6. Reload VS Code if prompted.
 
 The VSIX is the installable extension package. End users do not need to extract it, run npm, or compile anything.
@@ -79,9 +80,23 @@ Marketplace availability depends on publication of this release. If the release 
 
 Tabword only takes over Tab and Shift+Tab while a matching completion is available. Otherwise, the editor's normal indentation behavior remains in effect.
 
+## Python member completion
+
+In a Python file, place the cursor immediately after an attribute-access dot and press `Tab`:
+
+```python
+import math
+
+math.
+```
+
+Tabword recognizes the Python member-access context and asks VS Code to trigger its normal completion providers. Install the Microsoft Python extension and a Python language server such as Pylance to receive semantic members for modules, objects, and classes. Tabword does not attempt to reimplement Python's dynamic type analysis, and it does not replace the language server's completion engine.
+
+This behavior is currently enabled for Python files only. Other languages can be added after their completion-provider behavior is tested.
+
 ## What Tabword searches
 
-Tabword searches the **active document only**. It does not search other open files, folders, or the entire workspace.
+Tabword's ordinary word completion searches the **active document only**. It does not search other open files, folders, or the entire workspace. Python member completion is delegated to the active VS Code language providers.
 
 It recognizes identifier-style words made from:
 

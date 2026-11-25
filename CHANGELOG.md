@@ -1,3 +1,14 @@
+## 0.3.0 - 2026-11-25
+
+### Added
+- Python member-completion trigger: pressing `Tab` immediately after a dotted identifier chain (for example, `math.` or `player.`) invokes VS Code's completion providers.
+- Delegates Python member discovery to the installed Python language tooling (such as Pylance), preserving semantic completion instead of guessing members from document text.
+
+### Compatibility
+- Existing two-stage current-document word completion, reverse cycling, and compact suggestion behavior remain in place.
+- Member completion is currently enabled only for Python documents; other languages are intentionally deferred until their provider behavior is tested.
+- No number-key shortcuts, global keyboard listeners, or user-settings changes were introduced.
+
 ## 0.2.4 - 2026-11-25
 
 ### Fixed

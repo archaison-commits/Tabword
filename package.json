@@ -1,14 +1,14 @@
 {
   "name": "tabword",
   "displayName": "Tabword",
-  "description": "Two-stage word completion with compact, cursor-local suggestions.",
-  "version": "0.2.4",
+  "description": "Two-stage word completion with Python member suggestions after attribute-access dots.",
+  "version": "0.3.0",
   "publisher": "archaison-commits",
   "repository": {
     "type": "git",
     "url": "https://github.com/archaison-commits/Tabword.git"
   },
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -77,5 +77,9 @@
     "@types/vscode": "^1.85.0",
     "@vscode/vsce": "^3.9.2",
     "typescript": "^5.3.3"
+  },
+  "homepage": "https://github.com/archaison-commits/Tabword#readme",
+  "bugs": {
+    "url": "https://github.com/archaison-commits/Tabword/issues"
   }
 }
