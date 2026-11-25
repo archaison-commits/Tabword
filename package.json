@@ -1,13 +1,13 @@
 {
   "name": "tabword",
   "displayName": "Tabword",
-  "description": "Quiet, terminal-style word completion from the current document.",
-  "version": "0.1.2",
+  "description": "Two-stage word completion with compact, cursor-local suggestions.",
+  "version": "0.2.4",
   "publisher": "archaison-commits",
   "repository": {
     "type": "git",
     "url": "https://github.com/archaison-commits/Tabword.git"
-},
+  },
   "license": "MIT",
   "engines": {
     "vscode": "^1.85.0"
@@ -20,8 +20,8 @@
     "word completion",
     "tab completion",
     "terminal",
-    "zsh",
-    "productivity"
+    "productivity",
+    "VS Code"
   ],
   "icon": "images/tabword-icon.png",
   "activationEvents": [
@@ -37,18 +37,32 @@
       {
         "command": "tabword.expandPrevious",
         "title": "Tabword: Complete Previous"
+      },
+      {
+        "command": "tabword.dismissSuggestions",
+        "title": "Tabword: Dismiss Suggestions"
       }
     ],
     "keybindings": [
       {
         "key": "tab",
         "command": "tabword.expand",
-        "when": "editorTextFocus && tabword.canComplete"
+        "when": "editorTextFocus && tabword.canComplete && !suggestWidgetVisible"
       },
       {
         "key": "shift+tab",
         "command": "tabword.expandPrevious",
-        "when": "editorTextFocus && tabword.canComplete"
+        "when": "editorTextFocus && tabword.canComplete && !suggestWidgetVisible"
+      },
+      {
+        "key": "tab",
+        "command": "acceptSelectedSuggestion",
+        "when": "editorTextFocus && suggestWidgetVisible && tabword.suggestionsVisible"
+      },
+      {
+        "key": "escape",
+        "command": "tabword.dismissSuggestions",
+        "when": "editorTextFocus && suggestWidgetVisible && tabword.suggestionsVisible"
       }
     ]
   },

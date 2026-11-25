@@ -1,6 +1,15 @@
-.vscode/**
-.vscode-test/**
+# Source and development configuration
 src/**
 tsconfig.json
-**/*.map
+package-lock.json
 node_modules/**
+.vscode/**
+.vscode-test/**
+.git/**
+.gitignore
+.vscodeignore
+
+# TypeScript build artifacts not needed at runtime
+**/*.ts
+**/*.map
+**/*.vsix
